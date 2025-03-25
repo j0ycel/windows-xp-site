@@ -87,17 +87,33 @@ const WindowsXPPortfolio = () => {
     import: 'default',
   });
   
-  const generativeItems = Object.entries(generativeMedia).map(([path, src], i) => {
-    const filename = path.split('/').pop().replace(/\.[^/.]+$/, '');
-    const isVideo = /\.(mp4|webm)$/.test(path);
+  const generativeItems = [
+    // hosted (drive) embeds
+    {
+      id: 'walkthrough',
+      type: 'embed',
+      title: 'Walkthrough',
+      embedSrc: 'https://drive.google.com/file/d/1aKVOe8bpwf1YL6KYgOrWHlGlik0ZLFp1/preview'
+    },
+    {
+      id: 'parody',
+      type: 'embed',
+      title: 'Parody Video',
+      embedSrc: 'https://drive.google.com/file/d/13EoMv4M6_Oxv38uUsld4v20QmendsZI1/preview'
+    },
+    // local files
+    ...Object.entries(generativeMedia).map(([path, src], i) => {
+      const filename = path.split('/').pop();
+      const isVideo = /\.(mp4|webm)$/i.test(filename);
+      return {
+        id: `local-${i}`,
+        type: isVideo ? 'video' : 'image',
+        title: filename.replace(/[-_]/g, ' '),
+        src,
+      };
+    }),
+  ];
   
-    return {
-      id: `gen-${i}`,
-      src,
-      title: filename.replace(/[-_]/g, ' '),
-      type: isVideo ? 'video' : 'image',
-    };
-  });
   
 
   // System sounds function
@@ -152,6 +168,7 @@ const WindowsXPPortfolio = () => {
     });
   };
 
+  
   // Window contents
   const windowContents = {
     recycle: (
@@ -225,7 +242,7 @@ const WindowsXPPortfolio = () => {
           <p className="mb-2">A poignant narrative short about loss and grief featuring precise edits and dreamlike imagery. </p>
           <div className="aspect-w-16 aspect-h-9 max-w-3xl w-full">
             <iframe
-              src="https://drive.google.com/file/d/1PHg4TI42p1bGdvLZ-TLy_VpIgo77Bbtq/view?usp=drive_link"
+              src="https://drive.google.com/file/d/1PHg4TI42p1bGdvLZ-TLy_VpIgo77Bbtq/preview"
               allow="autoplay"
               className="w-full h-full rounded shadow"
             />
@@ -238,7 +255,7 @@ const WindowsXPPortfolio = () => {
           <p className="mb-2">Msuic video leveraging a unique location and practical effects to create a groounded science fiction aesthetic. </p>
           <div className="aspect-w-16 aspect-h-9 max-w-3xl w-full">
             <iframe
-              src="https://drive.google.com/file/d/1oQb_p8Rt9xK5mJydtkq0a59VUWG9YbmZ/view?usp=drive_link"
+              src="https://drive.google.com/file/d/1oQb_p8Rt9xK5mJydtkq0a59VUWG9YbmZ/preview"
               allow="autoplay"
               className="w-full h-full rounded shadow"
             />
@@ -344,27 +361,38 @@ const WindowsXPPortfolio = () => {
       <div className="p-4">
         <h2 className="text-xl font-bold mb-4">Fun Stuff</h2>
         <div className="grid grid-cols-3 gap-4">
-          {generativeItems.map((item) => (
-            <div key={item.id} className="border border-gray-300 rounded overflow-hidden">
-              {item.type === 'image' ? (
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="w-full h-auto cursor-pointer"
-                  onClick={() => setShowLightbox({ src: item.src })}
-                />
-              ) : (
-                <video
-                  src={item.src}
-                  controls
-                  className="w-full h-auto"
-                />
-              )}
-            </div>
-          ))}
+        {generativeItems.map((item) => (
+  <div key={item.id} className="border border-gray-300 rounded overflow-hidden aspect-w-16 aspect-h-9">
+  {item.type === 'image' ? (
+    <img
+      src={item.src}
+      alt={item.title}
+      className="w-full h-full object-cover cursor-pointer"
+      onClick={() => setShowLightbox({ src: item.src })}
+    />
+  ) : item.type === 'embed' ? (
+    <iframe
+      src={item.embedSrc}
+      title={item.title}
+      className="w-full h-full"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+      frameBorder="0"
+    />
+  ) : (
+    <video
+      src={item.src}
+      controls
+      className="w-full h-full object-cover"
+    />
+  )}
+</div>
+))}
+
         </div>
       </div>
     ),
+    
     blog: (
       <div className="p-4">
   <h2 className="text-xl font-bold mb-4">Blog</h2>

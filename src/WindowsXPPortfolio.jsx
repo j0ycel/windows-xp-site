@@ -640,8 +640,7 @@ const WindowsXPPortfolio = () => {
   };
 
   return (
-    <div
-    className="h-screen w-full flex flex-col overflow-hidden relative bg-[url('background.png')] bg-cover bg-center"
+    <div className="h-screen w-full flex flex-col overflow-hidden relative desktop-bg"
     onClick={handleDesktopClick}
     onContextMenu={handleContextMenu}
     ref={desktopRef}

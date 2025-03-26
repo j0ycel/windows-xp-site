@@ -209,11 +209,11 @@ const WindowsXPPortfolio = () => {
     ),
     resume: (
       <div className="w-full h-full">
-        <iframe
-          src="/simons_resume.pdf"
-          title="Resume PDF"
-          className="w-full h-full border-none"
-        />
+       <iframe
+  src="/resume.pdf"
+  className="w-full h-full border-none"
+  title="Resume PDF"
+/>
       </div>
     ),
     portfolio: (

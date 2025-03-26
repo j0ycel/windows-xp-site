@@ -903,7 +903,7 @@ const WindowsXPPortfolio = () => {
   alt="User Headshot" 
   className="w-10 h-10 mr-2 rounded-full border border-white shadow-sm"
 />
-            <div className="text-white font-semibold text-xl drop-shadow-md">[Your Name]</div>
+            <div className="text-white font-semibold text-xl drop-shadow-md">[Travis Simons]</div>
           </div>
           <div className="flex">
             <div className="bg-white flex-1 p-2 border-r border-gray-300">
